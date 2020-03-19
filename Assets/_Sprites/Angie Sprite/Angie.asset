@@ -10,21 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-<<<<<<< HEAD
   m_Name: Angie
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 59ca43de83200ae42b03b670f22a7aa9, type: 3}
-=======
-<<<<<<< HEAD:Assets/_Plattes/tiles2/map2_31.asset
-  m_Name: map2_31
-  m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300062, guid: 416fa231d4ffb9f4ca5eaa1385c146b8, type: 3}
-=======
-  m_Name: Angie
-  m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 59ca43de83200ae42b03b670f22a7aa9, type: 3}
->>>>>>> 82f68cae450d8f0a4e86f7ab9e90ebecfeaa98a1:Assets/_Sprites/Angie Sprite/Angie.asset
->>>>>>> 82f68cae450d8f0a4e86f7ab9e90ebecfeaa98a1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
