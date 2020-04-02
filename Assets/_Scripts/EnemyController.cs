@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
         position.x += moveDirection.x * speed * Time.deltaTime;
         position.y += moveDirection.y * speed * Time.deltaTime;
         rbody.MovePosition(position);
-        anim.SetFloat("move3", moveDirection.x);
+        
     }
 
     void onCollisionEnter2D(Collision2D other)
