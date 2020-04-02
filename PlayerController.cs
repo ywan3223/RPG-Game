@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        CameraController.instance.target = this.transform;
         currentHealth = 5;
         invincibleTimer = 0;
         rb = GetComponent<Rigidbody2D>();

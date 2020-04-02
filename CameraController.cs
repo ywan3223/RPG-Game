@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Transform target;
+    public Transform target;
+    public static CameraController instance { get; private set; }
     [SerializeField] private float smoothSpeed;
     [SerializeField] private float minX, minY, maxX, maxY;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -15,7 +22,6 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (target==null)
         {
             return;
