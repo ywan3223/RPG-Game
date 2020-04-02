@@ -7,33 +7,42 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     private Rigidbody2D rb;
-    
+    private Animator Anim;
     private float moveH, moveV;
     private bool isJumpPressed = false;
-    
+    private int maxHealth = 5;
+    private int currentHealth;
+    public int myMaxhealth { get { return maxHealth; } }
+    public int myCurrentHealth { get { return currentHealth; } }
 
     [SerializeField] private float jumpForce;
 
-    [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private float moveSpeed ;
+    public GameObject bulletPrefab;
+    public GameObject newPlayer;
 
     private Vector2 lookDirection = new Vector2(1, 0);//default
 
     private void Start()
     {
+        currentHealth = 2;
         rb = GetComponent<Rigidbody2D>();
+        Anim = gameObject.GetComponent<Animator>();
+
         if (isJumpPressed)
         {
             // the cube is going to move upwards in 10 units per second
 
-            
+
             rb.velocity = new Vector2(-70, 30);
             Debug.Log("jump");
         }
+
     }
 
     private void Update()
     {
-        
+
         moveH = Input.GetAxisRaw("Horizontal") * moveSpeed;
         moveV = Input.GetAxisRaw("Vertical") * moveSpeed;
 
@@ -45,13 +54,56 @@ public class PlayerController : MonoBehaviour
         }
 
         isJumpPressed = Input.GetButtonDown("Jump");
+        ///////////////////////////////////////////////////
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            
+            rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+            transform.localScale = new Vector2(-0.075f, 0.075f);
+        }
         
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            
+            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+            transform.localScale = new Vector2(0.075f, 0.075f);
+        }
+        else if (Input.GetAxisRaw("Vertical") != 0)
+        {
+            rb.velocity = new Vector2(moveSpeed, rb.velocity.x);
+            transform.localScale = new Vector2(0.075f, 0.075f);
+        }
+        else
+       
+        {
+            
+            rb.velocity = new Vector2(0, rb.velocity.y);
+ 
+        }
+        Anim.SetFloat("Speed", -rb.velocity.x);
 
-     
 
 
+        ///////////////////////////////////////////////////////////////////
 
-
+        ////////////////////////////////
+        if (Input.GetKey(KeyCode.K))
+        {
+            Anim.SetInteger("Attack", 0);
+        }
+        else
+        {
+            Anim.SetInteger("Attack", 1);
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Anim.SetInteger("Jump", 0);
+        }
+        else
+        {
+            Anim.SetInteger("Jump", 1);
+        }
+        ///////////////////////////////////////////////////////////////////
 
 
 
@@ -70,6 +122,36 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+             
+            GameObject bullet = Instantiate(bulletPrefab, rb.position, Quaternion.identity);
+            BulletController bc = bullet.GetComponent<BulletController>();
+            
+            if (bc != null)
+            {
+                bc.Move(lookDirection, 50);
+            }
+        }
+        
+    }
+    public void ChangeHealth(int amount)
+    {
+        Debug.Log(currentHealth + "/" + maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        Debug.Log(currentHealth + "/" + maxHealth);
+
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("posion"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            Instantiate(newPlayer, transform.position, transform.rotation);
+        }
     }
 
     private void FixedUpdate()
@@ -81,7 +163,7 @@ public class PlayerController : MonoBehaviour
         {
             // the cube is going to move upwards in 10 units per second
             rb.velocity = new Vector2(-100, 0);
-           
+
             Debug.Log("jump");
         }
     }
